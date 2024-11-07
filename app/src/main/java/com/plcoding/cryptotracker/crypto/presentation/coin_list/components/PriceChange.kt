@@ -40,6 +40,16 @@ fun PriceChange(
     } else {
         greenBackground
     }
+    val arrowIcon = if(change.value < 0.0) {
+        Icons.Default.KeyboardArrowDown
+    } else {
+        Icons.Default.KeyboardArrowUp
+    }
+    val percentText = if(change.value < 0.0) {
+        "${change.formatted} %"
+    } else {
+        "+${change.formatted} %"
+    }
 
     Row(
         modifier = modifier
@@ -49,17 +59,13 @@ fun PriceChange(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = if(change.value < 0.0) {
-                Icons.Default.KeyboardArrowDown
-            } else {
-                Icons.Default.KeyboardArrowUp
-            },
+            imageVector = arrowIcon,
             contentDescription = null,
             modifier = Modifier.size(20.dp),
             tint = contentColor
         )
         Text(
-            text = "${change.formatted} %",
+            text = percentText,
             color = contentColor,
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium
