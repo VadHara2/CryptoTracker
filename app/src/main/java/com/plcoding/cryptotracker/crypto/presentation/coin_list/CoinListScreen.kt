@@ -1,13 +1,14 @@
 package com.plcoding.cryptotracker.crypto.presentation.coin_list
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +36,8 @@ import kotlinx.coroutines.withContext
 fun CoinListScreen(
     state: CoinListState,
     onAction: (CoinListAction) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    listState: LazyListState
 ) {
     if(state.isLoading) {
         Box(
@@ -49,7 +51,8 @@ fun CoinListScreen(
         LazyColumn(
             modifier = modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            state = listState
         ) {
             items(state.coins) { coinUi ->
                 CoinListItem(
@@ -77,7 +80,8 @@ private fun CoinListScreenPreview() {
             ),
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background),
-            onAction = {}
+            onAction = {},
+            listState = rememberLazyListState()
         )
     }
 }

@@ -3,13 +3,13 @@
 package com.plcoding.cryptotracker.core.navigation
 
 import android.widget.Toast
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -42,12 +42,15 @@ fun AdaptiveCoinListDetailPane(
     }
 
     val navigator = rememberListDetailPaneScaffoldNavigator<Any>()
+    val listState = rememberLazyListState()
+
     NavigableListDetailPaneScaffold(
         navigator = navigator,
         listPane = {
             AnimatedPane {
                 CoinListScreen(
                     state = state,
+                    listState = listState,
                     onAction = { action ->
                         viewModel.onAction(action)
                         when(action) {
