@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.plcoding.cryptotracker.crypto.domain.CoinPrice
@@ -348,7 +350,7 @@ private fun getSelectedDataPointIndex(
     }
 }
 
-@Preview(widthDp = 1000)
+@PreviewLightDark
 @Composable
 private fun LineChartPreview() {
     CryptoTrackerTheme {
@@ -361,10 +363,10 @@ private fun LineChartPreview() {
             }
         }
         val style = ChartStyle(
-            chartLineColor = Color.Black,
-            unselectedColor = Color(0xFF7C7C7C),
-            selectedColor = Color.Black,
-            helperLinesThicknessPx = 1f,
+            chartLineColor = MaterialTheme.colorScheme.primary,
+            unselectedColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.3f),
+            selectedColor = MaterialTheme.colorScheme.primary,
+            helperLinesThicknessPx = 5f,
             axisLinesThicknessPx = 5f,
             labelFontSize = 14.sp,
             minYLabelSpacing = 25.dp,
@@ -372,13 +374,14 @@ private fun LineChartPreview() {
             horizontalPadding = 8.dp,
             xAxisLabelSpacing = 8.dp
         )
+
         val dataPoints = remember {
             coinHistoryRandomized.map {
                 DataPoint(
                     x = it.dateTime.hour.toFloat(),
                     y = it.priceUsd.toFloat(),
                     xLabel = DateTimeFormatter
-                        .ofPattern("ha\nM/d")
+                        .ofPattern("HH\nd/M")
                         .format(it.dateTime)
                 )
             }
@@ -391,7 +394,7 @@ private fun LineChartPreview() {
             modifier = Modifier
                 .width(700.dp)
                 .height(300.dp)
-                .background(Color.White),
+                .background(MaterialTheme.colorScheme.background),
             selectedDataPoint = dataPoints[1]
         )
     }

@@ -63,7 +63,7 @@ class CoinListViewModel(
                                 x = it.dateTime.hour.toFloat(),
                                 y = it.priceUsd.toFloat(),
                                 xLabel = DateTimeFormatter
-                                    .ofPattern("ha\nM/d")
+                                    .ofPattern("HH\nd/M")
                                     .format(it.dateTime)
                             )
                         }
